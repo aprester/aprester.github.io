@@ -1,1 +1,41 @@
-"Hello World!"
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Meine Radtour</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaf//unpkg.com/leaflet/dist/leaflet  <script src="https://unpkg.com/script> <!-- GPX Support -->
+  <style>
+    #map {
+      height: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h2>Meine Radtour</h2>
+  <div id="map"></div>
+
+  <script>
+    // Karte initialisieren
+    var map = L.map('map').setView([46.624, 14.305], 13); // z. B. Klagenfurt
+
+    // OpenStreetMap Layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap-Mitwirkende'
+    }).addTo(map);
+
+    // GPX-Datei laden
+    new L.GPX("tour.gpx", {
+      async: true,
+      marker_options: {
+        startIconUrl: 'https://unpkg.com/leaflet-gpx@1.5.0/pin-icon-start.png',
+        endIconUrl: 'https://unpkg.com/leaflet-gpx@1.5.0/pin-icon-end.png',
+        shadowUrl: 'https://unpkg.com/leaflet-gpx@1.5.0/pin-shadow.png'
+      }
+    }).on('loaded', function(e) {
+      map.fitBounds(e.target.getBounds());
+    }).addTo(map);
+  </script>
+</body>
+</html>
